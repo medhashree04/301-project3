@@ -3,9 +3,9 @@
  * project3.cpp
  * Fall 2025
  *
- * Partner 1:
- * Partner 2:
- * Date:
+ * Partner 1: Natalie Nardone
+ * Partner 2: Medhashree Adhikari
+ * Date: October 31, 2025
  */
 
 #include "project3.hpp"
