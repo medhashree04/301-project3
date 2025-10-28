@@ -38,6 +38,13 @@ vector<double> createAdjacencyMatrix(vector<double> &rates,
 
 /*
  * detectArbitrage
+  * Input:
+ *      vector<double> &adjMatrix: Reference to the adjacency matrix 
+ *      vector<string> &currencies: Reference to the currencies
+ *      double tol: The tolerance value (does NOT change)
+ * Output:
+ *      vector<int>: 
+ * Function:
  */
 vector<int> detectArbitrage(vector<double> &adjMatrix, 
                             vector<string> &currencies, 
@@ -47,7 +54,25 @@ vector<int> detectArbitrage(vector<double> &adjMatrix,
     int n = currencies.size();
     vector<double> distances( n, numeric_limits<double>::infinity() );
     vector<int> previous( n, -1 );
-    
+
+    int start = 0; // index 0
+    distances[start] = 0; // setting init distance to 0
+
+    // loops over the |V| - 1 - iterations
+    for(int i = 0; i < n - 1; i++) {
+        for(int u = 0; u < n; u++) { // u = c instruction
+            for(int r = 0; r < n*n; r*=n) {
+                int neighbor = r + u;
+                if
+                (distances[neighbor] > distances[u] + adjMatrix[neighbor] + tol)
+                {
+                    distances[neighbor] = distances[u] + adjMatrix[neighbor];
+                    previous[neighbor] = u;
+                } // cond check
+            } // inner inner loop - loop through rows
+        } // inner loop - loop through cols/vertex
+    } // for loop
+
     // Create the cycle.
     vector<int> cycle;
 
