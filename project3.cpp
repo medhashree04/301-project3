@@ -14,10 +14,25 @@ using namespace std;
 
 /*
  * createAdjacencyMatrix
+ * Input:
+ *      vector<double> &rates: Reference to the vector of rates
+ *      vector<string> &currencies: Reference to the string of currencies
+ * Output:
+ *      vector<double: the corresponding adjacency matrix
+ * Function:
+ *      The function takes in a matrix of the exchange rates and a vector of 
+ *      currency labels. It will return the corresponding adjacency matrix.
  */
 vector<double> createAdjacencyMatrix(vector<double> &rates, 
                                      vector<string> &currencies) {
     vector<double> adjMatrix(rates);
+
+    for (int i : adjMatrix) {
+        if (adjMatrix[i] != 0) {
+            adjMatrix[i] = log10(1/adjMatrix[i]);
+        } // cond check
+    } // for loop
+
     return adjMatrix;
 }
 
