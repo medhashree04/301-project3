@@ -62,24 +62,20 @@ vector<int> detectArbitrage(vector<double> &adjMatrix,
 
     // loops over the |V| - 1 - iterations
     for(int i = 0; i < n; i++) {
-        for(int u = 0; u < n; u++) { // u = c instruction
-            for(int r = 0; r < n*n; r+=n) {
-                // int neighbor = u * n + r;
-                int neighbor = r + u;
-                if
-                (distances[neighbor] > distances[u] + adjMatrix[neighbor] + tol)
-                {
-                    distances[neighbor] = distances[u] + adjMatrix[neighbor];
-                    previous[neighbor] = u;
-                    if((i == n-1) && (vertex_updated==-1)){
-                        vertex_updated = neighbor;
+        for(int u = 0; u < n; u++) { // row
+            for(int v = 0; v < n; v++) { // column
+                int edge = u * n + v;
+                if (distances[v] > distances[u] + adjMatrix[edge] + tol) {
+                    distances[v] = distances[u] + adjMatrix[edge];
+                    previous[v] = u;
+                    if(i == n-1){
+                        vertex_updated = v;
                     }
                 } // cond check
             } // inner inner loop - loop through rows
         } // inner loop - loop through cols/vertex
     } // for loop
 
-    cout << vertex_updated << endl;
     // Create the cycle.
     vector<int> cycle;
     if(vertex_updated == -1) {
@@ -88,23 +84,23 @@ vector<int> detectArbitrage(vector<double> &adjMatrix,
 
     // finding cycle
     int current = vertex_updated;
-    for (int i = 0; i < n*n; i++){
+    while (true) {
         cycle.push_back(current);
-        if (count(cycle.begin(), cycle.end(), current) == 1) {
+        if (count(cycle.begin(), cycle.end(), current) == 2) {
             break;
         } else {
             current = previous[current];
         }
     }
 
-    // erase 
-    for (int j = 0; j < cycle.size(); j++) {
+    // erase
+    int j;
+    for (j = 0; j < cycle.size(); j++) {
         if (cycle[j] == current) {
             break;
-        } else {
-            cycle.erase(cycle.begin() + j);
         }
     }
+    cycle.erase(cycle.begin() + j - 1); // erase after finding j
     
     // reverse cycle
     reverse(cycle.begin(), cycle.end());
