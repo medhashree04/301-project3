@@ -1,12 +1,14 @@
 /*
  * CSC-301
- * project3.hpp
+ * project3.cpp
  * Fall 2025
  *
  * Partner 1: Natalie Nardone
  * Partner 2: Medhashree Adhikari
  * Date: October 31, 2025
+ * Acknowledgements: Eric Autry
  */
+
 
 #ifndef PROJECT3_HPP_
 #define PROJECT3_HPP_
